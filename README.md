@@ -22,3 +22,6 @@
 1. Change/Customize your container name into `docker_exec.sh`
 
 2. Run `docker_exec.sh` to create a bash shell session to the container
+
+
+--Alain Pulluelo
