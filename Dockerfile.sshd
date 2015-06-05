@@ -1,0 +1,40 @@
+FROM ubuntu:14.10
+
+MAINTAINER ZenEntropy <alain.pulluelo@forgerock.com>
+
+USER root
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update && apt-get install -y apt-utils \
+                   && apt-get install -y openssh-server \
+                   && apt-get install -y lsof \
+                   && apt-get install -y inetutils-ping \
+                   && apt-get install -y net-tools \
+                   && apt-get install -y vim \
+                   && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /ball
+
+# ----------------------------------------------------------------------------------------
+# Setup sshd (set root password)
+# ----------------------------------------------------------------------------------------
+RUN echo root:toor | chpasswd
+RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+# SSH login fix. Otherwise user is kicked off after login
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+#RUN sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
+
+RUN update-rc.d ssh defaults
+
+EXPOSE 22
+
+# ----------------------------------------------------------------------------------------
+# prepare the startup command of the container
+# ----------------------------------------------------------------------------------------
+USER root
+WORKDIR /root
+RUN mkdir scripts
+ADD my_init_sshd.sh scripts/
+RUN chmod 0740 scripts/my_init_sshd.sh
+
+# !! my_init_sshd.sh must be launched with root user !!
+CMD ["/root/scripts/my_init_sshd.sh"]
