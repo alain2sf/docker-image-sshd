@@ -23,5 +23,3 @@
 
 2. Run `docker_exec.sh` to create a bash shell session to the container
 
-
---Alain Pulluelo
