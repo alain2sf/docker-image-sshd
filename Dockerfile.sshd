@@ -1,6 +1,6 @@
 FROM ubuntu:14.10
 
-MAINTAINER ZenEntropy <alain.pulluelo@forgerock.com>
+MAINTAINER ZenEntropy <alain.pulluelo@gmail.com>
 
 USER root
 
