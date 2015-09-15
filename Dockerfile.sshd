@@ -34,7 +34,8 @@ EXPOSE 22
 USER root
 WORKDIR /root
 RUN mkdir scripts
-ADD my_init_sshd.sh scripts/
+# ADD/COPY always run with root uid... even if USER is set to a different user :(
+COPY my_init_sshd.sh scripts/
 RUN chmod 0740 scripts/my_init_sshd.sh
 
 # !! my_init_sshd.sh must be launched with root user !!
