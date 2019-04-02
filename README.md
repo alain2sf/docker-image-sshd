@@ -10,7 +10,7 @@
 ### Create/Run the Container
 
 1. Change/Customize your image name/tag, hosts, ports and container name into `_run.sh`
-> Refers init command: `my_init_sshd.sh`
+> Refers init command: `launcher_sshd.sh`
 
 2. Run `_run.sh` to create and start the container from image created at step 1
 > Then use `docker stop|start container_name` commands to stop/start the container <br>
